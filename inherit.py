@@ -1,13 +1,13 @@
 class LogicGate:
     def __init__(self, n):
         self.label = n
-        self.output = None
+        self.output = None  # Fixed 'none' to 'None'
 
     def getLabel(self):
         return self.label
 
     def getOutput(self):
-        self.output = self.performGateLogic() 
+        self.output = self.performGateLogic()  # Call the function
         return self.output
 
 
@@ -73,13 +73,34 @@ class OrGate(BinaryGate):
         return 1 if a == 1 or b == 1 else 0
 
 
-class NotGate(UnaryGate):  
+class NotGate(UnaryGate):
     def __init__(self, n):
         super().__init__(n)
 
     def performGateLogic(self):
         a = self.getPin()
         return 0 if a == 1 else 1
+
+
+# Part C: Adding NAND, NOR, XOR Gates
+class NandGate(AndGate):
+    def performGateLogic(self):
+        return 0 if super().performGateLogic() == 1 else 1
+
+
+class NorGate(OrGate):
+    def performGateLogic(self):
+        return 0 if super().performGateLogic() == 1 else 1
+
+
+class XorGate(BinaryGate):
+    def __init__(self, n):
+        super().__init__(n)
+
+    def performGateLogic(self):
+        a = self.getPinA()
+        b = self.getPinB()
+        return 1 if a != b else 0
 
 
 class Connector:
@@ -95,16 +116,23 @@ class Connector:
         return self.togate
 
 
+# Updated main function with a test circuit
 def main():
     g1 = AndGate("G1")  
-    g2 = AndGate("G2")
-    g3 = OrGate("G3")  
-    g4 = NotGate("G4") 
+    g2 = OrGate("G2")
+    g3 = NandGate("G3")  # Added NAND gate
+    g4 = NorGate("G4")   # Added NOR gate
+    g5 = XorGate("G5")   # Added XOR gate
+    g6 = NotGate("G6")
+
     c1 = Connector(g1, g3)
     c2 = Connector(g2, g3)
     c3 = Connector(g3, g4)
+    c4 = Connector(g4, g5)
+    c5 = Connector(g5, g6)
 
-    print(f"Final Output: {g4.getOutput()}")  
+    print(f"Final Output: {g6.getOutput()}")  # Display result
+
 
 if __name__ == "__main__":
     main()
