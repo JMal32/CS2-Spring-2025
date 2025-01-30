@@ -88,7 +88,7 @@ class Connector:
 
 
 def test_circuit(inputs):
-    """Improved test circuit with a clear function"""
+    
     g1 = AndGate("G1")
     g2 = OrGate("G2")
     g3 = XorGate("G3")  # More useful in a 4-bit circuit
