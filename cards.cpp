@@ -111,8 +111,11 @@ CardSuit itoCardSuit(int s) {
         return CS_HEART;
     case 3:
         return CS_SPADE;
+    default:
+        return CS_CLUB;
+    
     }
-
+}
 /* Converts from integer to CardRank using a switch statement */
 CardRank itoCardRank(int r) {
     switch (r) {
@@ -142,6 +145,8 @@ CardRank itoCardRank(int r) {
                 return CR_QUEEN;
             case 12:
                 return CR_KING;
+            default:
+                return CR_ACE;
     }
 }
 
@@ -157,7 +162,7 @@ int main() {
     Card c;
     for (int suit = 0; suit < 4; suit++) {
         for (int rank = 0; rank < 13; rank++) {
-            c = Card::Card(itoCardSuit(suit), itoCardRank(rank));
+            c = Card (itoCardSuit(suit), itoCardRank(rank));
             cout << c.getStr() << "    ";
         }
         cout << endl;
@@ -165,7 +170,7 @@ int main() {
 
 }
 
-
+/*
 class Fraction {
 public:
   Fraction(int num=0, int den=1);
@@ -213,3 +218,4 @@ int main() {
   cout << f.getNum() << endl;
   
 }
+*/
