@@ -1,19 +1,18 @@
-#include "intStack.h"
-#include "charStack.h"
 #include <iostream>
 #include <string>
 #include <vector>
+using namespace std;
 
 class IntStack {
 public:
-  intStack(int sz); // Constructor
+  IntStack(int sz); // Constructor
   bool isEmpty();
   void push(int item);
   int peek();
   int pop();
   int size();
 private:
-std::vector<int> vec;
+vector<int> vec;
 };
 
 inStack::intStack(int sz) {
@@ -31,7 +30,7 @@ void IntStack::push(int item) {
 int IntStack::peek() {
   if (this->isEmpty()) {
     cout << "Error: Peeking an empty intStack: NULL returned." << endl;
-    return NULL;
+    return '\0';
   }
   else {
     return vec.back();
@@ -46,7 +45,7 @@ int IntStack::pop() {
   int res;
   if (this->isEmpty()) {
     cout << "Error: Popping an empty intStack: NULL returned." << endl;
-    return NULL;
+    return '\0';
   }
   else {
     res = vec.back();

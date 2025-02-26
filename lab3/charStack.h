@@ -1,22 +1,21 @@
-#include "intStack.h"
-#include "charStack.h"
 #include <iostream>
 #include <string>
 #include <vector>
+using namespace std;
 
 class CharStack {
 public:
-  charStack(char c); // Constructor
+  CharStack(char c); // Constructor
   void push(char item);
   bool isEmpty();
   char pop();
   char peek();
   char size();
 private:
-  std::vector<char> vec;
+  vector<char> vec;
 };
 
-charStack::charStack(char c) {
+CharStack::CharStack(char c) {
   vec.reserve(c + 100);
 }
 
@@ -25,22 +24,24 @@ void CharStack::push(char item) {
 }
 
 bool CharStack::isEmpty() {
-  return vec.size() == 0;
+  return vec.empty();
 }
 
 char CharStack::pop() {
-  char res;
   if (this->isEmpty()) {
-    cout:: << "Error: Popping an empty charStack: NULL returned." << endl;
-    return NULL;
+    cout << "Error: Popping an empty charStack: NULL returned." << endl;
+    return '\0';
   }
   else {
-    return vec.back();
+    char res = vec.back(); // I changed this up a little and just put the res variable in here because its only used in the else portion
+    vec.pop_back();
+    return res;
   }
-
+}
 char CharStack::peek() {
   if (this->isEmpty()) {
       cout << "Error: Peeking an empty charStack: NULL returned." << endl;
+      return '\0';
   }
   else {
     return vec.back();
