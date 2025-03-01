@@ -15,12 +15,12 @@ private:
 vector<int> vec;
 };
 
-inStack::intStack(int sz) {
+IntStack::IntStack(int sz) {
   vec.reserve(sz + 100);
 }
 
 bool IntStack::isEmpty() {
-  return vec.size() == 0;
+  return vec.empty();
 }
 
 void IntStack::push(int item) {
