@@ -1,10 +1,10 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
 
 // Checking if a string is a palindrome
-bool isPalindrome(const std::string& str) {
+bool isPalindrome(const string &str) {
   int n = str.size();
   for (int i = 0; i < n / 2; ++i) {
     if (str[i] != str[n - i - 1]) {
@@ -15,8 +15,8 @@ bool isPalindrome(const std::string& str) {
 }
 
 // Function to make palindrome from given string
-string makePalindrome(const std::string& input) {
-  //Empty Strings
+string makePalindrome(const string &input) {
+  // Empty Strings
   if (input.empty()) {
     return "";
   }
@@ -24,7 +24,7 @@ string makePalindrome(const std::string& input) {
   if (isPalindrome(input)) {
     return input;
   }
-  
+
   int len = input.size();
   int half = len / 2;
 
@@ -55,5 +55,3 @@ int main() {
 
   return 0;
 }
-
-

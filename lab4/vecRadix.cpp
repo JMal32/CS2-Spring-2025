@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 using namespace std;
 
@@ -75,12 +76,12 @@ int main() {
   cout << "Generating timing data..." << endl;
 
   for (int size = 1000; size <= 10000; size += 1000) {
-    clock_t start = clock();
+    auto start = chrono::high_resolution_clock::now();
     RadixSort(size);
-    clock_t end = clock();
+    auto end = chrono::high_resolution_clock::now();
 
-    double elapsed = double(end - start) / CLOCKS_PER_SEC;
-    csvFile << size << "," << fixed << setprecision(5) << elapsed << endl;
+    chrono::duration<double> elapsed = end - start;
+    csvFile << size << "," << fixed << setprecision(5) << elapsed.count() << endl;
     cout << "Completed size " << size << endl;
   }
 
