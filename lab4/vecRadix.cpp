@@ -1,4 +1,4 @@
-#include "queueClass.h"
+#include "vecQueue.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
