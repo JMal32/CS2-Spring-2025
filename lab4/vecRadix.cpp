@@ -1,4 +1,4 @@
-#include "vecQueue.h"
+#include "myQueue.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -11,7 +11,7 @@
 using namespace std;
 
 vector<unsigned long long> RadixSort(int sz) {
-  QueueClass<unsigned long long> mainBin(sz);
+  myQueue<unsigned long long> mainBin(sz);
 
   vector<unsigned long long> original;
 
@@ -29,12 +29,12 @@ vector<unsigned long long> RadixSort(int sz) {
     cout << endl << endl;
   }
 
-  QueueClass<unsigned long long> digitBins[10] = {
-      QueueClass<unsigned long long>(sz), QueueClass<unsigned long long>(sz),
-      QueueClass<unsigned long long>(sz), QueueClass<unsigned long long>(sz),
-      QueueClass<unsigned long long>(sz), QueueClass<unsigned long long>(sz),
-      QueueClass<unsigned long long>(sz), QueueClass<unsigned long long>(sz),
-      QueueClass<unsigned long long>(sz), QueueClass<unsigned long long>(sz)};
+  myQueue<unsigned long long> digitBins[10] = {
+      myQueue<unsigned long long>(sz), myQueue<unsigned long long>(sz),
+      myQueue<unsigned long long>(sz), myQueue<unsigned long long>(sz),
+      myQueue<unsigned long long>(sz), myQueue<unsigned long long>(sz),
+      myQueue<unsigned long long>(sz), myQueue<unsigned long long>(sz),
+      myQueue<unsigned long long>(sz), myQueue<unsigned long long>(sz)};
 
   for (int position = 0; position < 9; position++) {
     while (!mainBin.empty()) {
