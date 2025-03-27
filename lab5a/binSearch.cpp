@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-bool binarySearch(const vector<int>& alist, int item){
+bool binarySearch(const vector<unsigned long long>& alist, unsigned long long item){
   int first = 0;
   int last = alist.size() - 1; 
   bool found = false;
@@ -66,15 +66,17 @@ int main() {
     int size = initSize * pow(2, i);
     vector<unsigned long long> vec;
     getUniqueNums(size + 1000, vec); // This is where we generate 1000 extra ints
+  
+    // Copying those unique nums in a new vector except for the last 1000
+    vector<unsigned long long> uniqueVec(vec.begin(), vec.end() - 1000);
     
-    vector<unsigned long long> uniqueVec(vec.begin(), vec.end() - 1000); // Copying those unique nums in a new vector except for the last 1000
-    
+    // Quick little sort function
     sort(uniqueVec.begin(), uniqueVec.end());
 
-   
+    int item = uniqueVec[0];
 
     auto start = chrono::high_resolution_clock::now();
-    binarySearch(int uniqueVec, int item);    
+    bool found = binarySearch(uniqueVec, item);    
     auto end = chrono::high_resolution_clock::now();
 
     chrono::duration<double> totalTime = end - start;
