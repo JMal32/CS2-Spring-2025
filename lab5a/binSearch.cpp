@@ -56,16 +56,14 @@ void getUniqueNums(int sz, vector<unsigned long long>& v) {
 
 int main() {
   ofstream csvFile("bin_timing.csv");
-  csvFile << "Size,Time(milliseconds)" << endl;
+  csvFile << "Size,SearchType,Time(milliseconds)" << endl;
 
   cout << "Generating Timing Data..." << endl;
   
-  vector<int> manSizes = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000};
-  //int initSize = 1000;
+  vector<int> testSize = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000};
   int count = 10;
 
-  for (int size : manSizes) {
-    // This line is for if I want to double size in a scaling way instead of the static integers in manSizes --int size = initSize * pow(2, i);
+  for (int size : testSize) {
     vector<unsigned long long> vec;
     getUniqueNums(size + 1000, vec); // This is where we generate 1000 extra ints
   
@@ -74,16 +72,34 @@ int main() {
     
     // Quick little sort function
     sort(uniqueVec.begin(), uniqueVec.end());
-
-    int item = uniqueVec[0];
-
-    auto start = chrono::high_resolution_clock::now();
-    bool found = binarySearch(uniqueVec, item);    
-    auto end = chrono::high_resolution_clock::now();
-
-    chrono::duration<double, std::milli> totalTime = end - start;
+  
+    // First timing where we're searching for integers NOT in the vector
+    vector<unsigned long long> notInVec(vec.end() - 1000, vec.end());
     
-    csvFile << size << "," << fixed << setprecision(6) << totalTime.count() << endl;
+    auto start1 = chrono::high_resolution_clock::now();
+      for (unsigned long long num : notInVec) {
+        bool found = binarySearch(uniqueVec, num);
+      }
+    auto end1 = chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> totalNotInVec = end1 - start1;
+    
+    // Second timing where we're searching for integer IN the vector
+    vector<unsigned long long> inVec;
+    int selectNum = min(1000, (int)uniqueVec.size());
+    for (int i = 0; i< selectNum; i++) {
+      int randIndex = rand() % uniqueVec.size();
+      inVec.push_back(uniqueVec[randIndex]);
+    }
+    
+    auto start2 = chrono::high_resolution_clock::now();
+    for (unsigned long long num : inVec) {
+    bool found = binarySearch(uniqueVec, num);
+    }
+    auto end2 = chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> totalInVec = end2 - start2;
+    
+    csvFile << size << ",NotInVec," << fixed << setprecision(4) << totalNotInVec.count() << endl;
+    csvFile << size << ",InVec," << fixed << setprecision(4) << totalInVec.count() << endl;
   }
   csvFile.close();
   return 0;
