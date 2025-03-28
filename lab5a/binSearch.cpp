@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
 
 bool binarySearch(const vector<unsigned long long>& alist, unsigned long long item){
@@ -55,15 +56,16 @@ void getUniqueNums(int sz, vector<unsigned long long>& v) {
 
 int main() {
   ofstream csvFile("bin_timing.csv");
-  csvFile << "Size,Time(seconds)" << endl;
+  csvFile << "Size,Time(milliseconds)" << endl;
 
   cout << "Generating Timing Data..." << endl;
   
-  int initSize = 1000;
+  vector<int> manSizes = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000};
+  //int initSize = 1000;
   int count = 10;
 
-  for (int i = 0; i < count; i++) {
-    int size = initSize * pow(2, i);
+  for (int size : manSizes) {
+    // This line is for if I want to double size in a scaling way instead of the static integers in manSizes --int size = initSize * pow(2, i);
     vector<unsigned long long> vec;
     getUniqueNums(size + 1000, vec); // This is where we generate 1000 extra ints
   
@@ -79,9 +81,9 @@ int main() {
     bool found = binarySearch(uniqueVec, item);    
     auto end = chrono::high_resolution_clock::now();
 
-    chrono::duration<double> totalTime = end - start;
+    chrono::duration<double, std::milli> totalTime = end - start;
     
-    csvFile << size << "," << totalTime.count() << endl;
+    csvFile << size << "," << fixed << setprecision(6) << totalTime.count() << endl;
   }
   csvFile.close();
   return 0;
