@@ -50,4 +50,6 @@ RaxixSort(size) function to create a queue with initial size
     END WHILE
     
     RETURN results
+
+I am still not great at writing out my Pseudocode so it looks kind of funky. Hopefully it makes a little sense.
 ```
