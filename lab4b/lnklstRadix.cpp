@@ -45,6 +45,25 @@ vector<unsigned long long>& LLRxSort(vector<unsigned long long>& vlist) {
     return vlist;
 }
 
+// Vector-based RadixSort function (Lab 4 version)
+vector<unsigned long long>& vectorRadixSort(vector<unsigned long long>& vlist) {
+    vector<vector<unsigned long long>> digitBins(10);
+    for (int position = 0; position < 6; position++) {
+        for (unsigned long long num : vlist) {
+            int digit = (num / static_cast<unsigned long long>(pow(10, position))) % 10;
+            digitBins[digit].push_back(num);
+        }
+        vlist.clear();
+        for (int d = 0; d < 10; d++) {
+            for (unsigned long long num : digitBins[d]) {
+                vlist.push_back(num);
+            }
+            digitBins[d].clear();
+        }
+    }
+    return vlist;
+}
+
 // Generate vector of random numbers
 vector<unsigned long long> generateRandomNumbers(int size) {
     vector<unsigned long long> numbers;
@@ -96,20 +115,36 @@ int main() {
     }
     cout << endl << endl;
     
+    // Compare both RadixSort implementations
     ofstream csvFile("radix_sort_timing.csv");
-    csvFile << "Size,Time(milliseconds)" << endl;
+    csvFile << "Implementation,Size,Time(milliseconds)" << endl;
     
     cout << "Generating timing data..." << endl;
+    
+    // First run all LinkedList RadixSort timings
     for (int size = 100000; size <= 1000000; size += 100000) {
-        vector<unsigned long long> test_data = generateRandomNumbers(size);
+        vector<unsigned long long> ll_test_data = generateRandomNumbers(size);
         
         auto start = chrono::high_resolution_clock::now();
-        LLRxSort(test_data);
+        LLRxSort(ll_test_data);
         auto end = chrono::high_resolution_clock::now();
         
         chrono::duration<double> elapsed = end - start;
-        csvFile << size << "," << fixed << setprecision(2) << (elapsed.count() * 1000) << endl;
-        cout << "Size " << size << ": " << (elapsed.count() * 1000) << " milliseconds" << endl;
+        csvFile << "LinkedList," << size << "," << fixed << setprecision(2) << (elapsed.count() * 1000) << endl;
+        cout << "LinkedList Size " << size << ": " << (elapsed.count() * 1000) << " milliseconds" << endl;
+    }
+    
+    // Then run all Vector RadixSort timings
+    for (int size = 100000; size <= 1000000; size += 100000) {
+        vector<unsigned long long> vec_test_data = generateRandomNumbers(size);
+        
+        auto start = chrono::high_resolution_clock::now();
+        vectorRadixSort(vec_test_data);
+        auto end = chrono::high_resolution_clock::now();
+        
+        chrono::duration<double>elapsed = end - start;
+        csvFile << "Vector," << size << "," << fixed << setprecision(2) << (elapsed.count() * 1000) << endl;
+        cout << "Vector Size " << size << ": " << (elapsed.count() * 1000) << " milliseconds" << endl;
     }
     
     csvFile.close();
