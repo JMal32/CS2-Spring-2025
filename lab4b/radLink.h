@@ -24,5 +24,63 @@ public:
       delete temp;
     }
   }
+
+  // Queueing ops
+  void enqueue(T value) {
+    Node* newNode = new Node(value);
+    if (head == nullptr) {
+      head = newNode;
+      tail = newNode;
+    } else {
+      tail->next = newNode;
+      tail = newNode;
+    }
+    count++;
+  }
+
+T dequeue() {
+    if (head == nullptr) {
+        throw std::runtime_error("Queue is empty");
+    }
+    T value = head->data;
+    Node* temp = head;
+    head = head->next;
+    if (head == nullptr) { // If the queue becomes empty, reset tail
+        tail = nullptr;
+    }
+    delete temp;
+    count--;
+    return value;
+}
+
+  bool isEmpty() const {
+    return head == nullptr; 
+  } 
+
+  int size() const{
+    return count;
+  }
+};
+
+template <typename T> class LLQueue {
+private:
+  LinkedList2<T> list;
+
+public:
+  void push(T val) {
+    list.enqueue(val);
+  }
+
+  T pop() {
+    return list.dequeue();
+  }
+
+  bool empty() const {
+    return list.isEmpty();
+  }
+
+  int size() const {
+    return list.size();
+  }
 };
 
