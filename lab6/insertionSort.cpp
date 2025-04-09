@@ -12,7 +12,6 @@ vector<int> getSubArray(const vector<int>& arr, int start, int end){
 }
 
 int main(){
-  vector<int> array = {26, 55, 24, 76, 19, 2734, 43, 42, 65, 86, 19, 12, 77, 23};
 
 
 }
