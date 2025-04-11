@@ -8,18 +8,18 @@ private:
   as a struct.*/
   struct Node {
     T data;
-    Node* next;
-    Node(T val) : data(val), next(nullptr){}
+    Node *next;
+    Node(T val) : data(val), next(nullptr) {}
   };
-  Node* head; // Pointer to first node
-  Node* tail; // Pointer to last node
-  int count; // This is where I track the nodes
+  Node *head; // Pointer to first node
+  Node *tail; // Pointer to last node
+  int count;  // This is where I track the nodes
 
 public:
   LinkedList2() : head(nullptr), tail(nullptr), count(0) {} // Constructor
-  ~LinkedList2() {  // Destructor
+  ~LinkedList2() {                                          // Destructor
     while (head != nullptr) {
-      Node* temp = head;
+      Node *temp = head;
       head = head->next;
       delete temp;
     }
@@ -27,7 +27,7 @@ public:
 
   // Queueing ops
   void enqueue(T value) {
-    Node* newNode = new Node(value);
+    Node *newNode = new Node(value);
     if (head == nullptr) {
       head = newNode;
       tail = newNode;
@@ -38,28 +38,24 @@ public:
     count++;
   }
 
-T dequeue() {
+  T dequeue() {
     if (head == nullptr) {
-        throw std::runtime_error("Queue is empty");
+      throw std::runtime_error("Queue is empty");
     }
     T value = head->data;
-    Node* temp = head;
+    Node *temp = head;
     head = head->next;
     if (head == nullptr) { // If the queue becomes empty, reset tail
-        tail = nullptr;
+      tail = nullptr;
     }
     delete temp;
     count--;
     return value;
-}
-
-  bool isEmpty() const {
-    return head == nullptr; 
-  } 
-
-  int size() const{
-    return count;
   }
+
+  bool isEmpty() const { return head == nullptr; }
+
+  int size() const { return count; }
 };
 
 template <typename T> class LLQueue {
@@ -67,20 +63,11 @@ private:
   LinkedList2<T> list;
 
 public:
-  void push(T val) {
-    list.enqueue(val);
-  }
+  void push(T val) { list.enqueue(val); }
 
-  T pop() {
-    return list.dequeue();
-  }
+  T pop() { return list.dequeue(); }
 
-  bool empty() const {
-    return list.isEmpty();
-  }
+  bool empty() const { return list.isEmpty(); }
 
-  int size() const {
-    return list.size();
-  }
+  int size() const { return list.size(); }
 };
-
