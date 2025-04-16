@@ -4,13 +4,15 @@
 
 using namespace std;
 
-unsigned long long quickSort(unsigned long long list, int lo, int hi) {
+void quickSort(int list[], int lo, int hi) {
   if (lo < hi) {
     int pivotIndex = partition(list, lo, hi);
+    quickSort(list, lo, pivotIndex - 1);
+    quickSort(list, pivotIndex + 1, hi);
   }
 }
 
-unsigned long long partition(int list[], int lo, int hi) {
+unsigned long long qsPartition(int list[], int lo, int hi) {
   int pivot = list[hi];
 }
 
