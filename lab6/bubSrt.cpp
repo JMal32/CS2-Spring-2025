@@ -52,12 +52,14 @@ int main() {
 
     vector<unsigned long long> vec =
         originalVec; // made a copy of the original list to use for timing
-    auto start1 = chrono::high_resolution_clock::now();
+    chrono::high_resolution_clock::time_point start =
+        chrono::high_resolution_clock::now();
     bubbleSort(vec);
-    auto end1 = chrono::high_resolution_clock::now();
-    chrono::duration<double, std::milli> total = end1 - start1;
+    chrono::high_resolution_clock::time_point end =
+        chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> time_span = end - start;
 
-    csvFile << size << "Time:" << fixed << setprecision(4) << total.count()
+    csvFile << size << "Time:" << fixed << setprecision(4) << time_span.count()
             << endl;
 
     cout << "The list has been sorted!" << endl;
