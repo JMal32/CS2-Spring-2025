@@ -1,7 +1,10 @@
+#include <algorithm>
 #include <chrono>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 void bubbleSort(vector<unsigned long long> &alist) {
@@ -9,7 +12,7 @@ void bubbleSort(vector<unsigned long long> &alist) {
     for (int i = 0; i < sznum; i++) {
       if (alist[i] > alist[i + 1]) {
         // swapping elements here
-        int temp = alist[i];
+        unsigned long long temp = alist[i];
         alist[i] = alist[i + 1];
         alist[i + 1] = temp;
       }
@@ -37,13 +40,13 @@ void getUniqueNums(int sz, vector<unsigned long long> &v) {
   }
 }
 int main() {
-  ofstream csvFile("bin_timing.csv");
-  csvFile << "Size,SearchType,Time(milliseconds)" << endl;
+  ofstream csvFile("bubble_timing.csv");
+  csvFile << "Size,Algorithm,Time(milliseconds)" << endl;
 
   cout << "Generating Timing Data..." << endl;
 
-  vector<int> testSize = {1000,  2000,   5000,   10000,  20000,
-                          50000, 100000, 200000, 500000, 1000000};
+  vector<int> testSize = {10000, 20000, 30000, 40000, 50000,
+                          60000, 70000, 80000, 90000, 100000};
 
   for (int size : testSize) {
     vector<unsigned long long> originalVec;
@@ -59,8 +62,8 @@ int main() {
         chrono::high_resolution_clock::now();
     chrono::duration<double, std::milli> time_span = end - start;
 
-    csvFile << size << "Time:" << fixed << setprecision(4) << time_span.count()
-            << endl;
+    csvFile << size << ",BubbleSort," << fixed << setprecision(4)
+            << time_span.count() << endl;
 
     cout << "The list has been sorted!" << endl;
   }
