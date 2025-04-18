@@ -1,0 +1,11 @@
+Size,Algorithm,Time(milliseconds)
+10000,BubbleSort,199.6215
+20000,BubbleSort,859.9260
+30000,BubbleSort,2039.8888
+40000,BubbleSort,3741.4870
+50000,BubbleSort,5934.6303
+60000,BubbleSort,8653.4832
+70000,BubbleSort,11970.9583
+80000,BubbleSort,15876.7439
+90000,BubbleSort,20315.4475
+100000,BubbleSort,25401.7303
