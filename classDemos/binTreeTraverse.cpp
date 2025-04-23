@@ -2,16 +2,38 @@
 
 using namespace std;
 
-class Node {
-public:
+struct Node {
   int data;
   Node *left;
   Node *right;
-
   Node(int item) {
     data = item;
     left = right = nullptr;
   }
 };
 
-void Node::GFG(Node *root) {}
+// Inserting a node
+Node *insert(Node *node, int data) {
+  if (node == nullptr)
+    return new Node(data);
+
+  if (node->data == data)
+    return node;
+
+  if (node->data < data)
+    node->right = insert(node->right, data);
+
+  else
+    node->left = insert(node->left, data);
+
+  return node;
+}
+
+// Finding a node
+Node *find(Node *root, int data) {
+  if (root == nullptr || root->data == data)
+    return root;
+
+  if (root->data < data)
+    return find(root->left, data);
+}

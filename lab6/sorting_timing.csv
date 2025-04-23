@@ -1,0 +1,14 @@
+Algorithm,DataType,Size,Time(milliseconds)
+BubbleSort,Integer,10000,190.9632
+BubbleSort,Fraction,10000,275.2196
+BubbleSort,Integer,20000,831.8503
+BubbleSort,Fraction,20000,1168.7729
+BubbleSort,Integer,30000,1984.9770
+BubbleSort,Fraction,30000,2814.6285
+BubbleSort,Integer,40000,3681.1330
+BubbleSort,Fraction,40000,5106.1785
+BubbleSort,Integer,50000,5812.3762
+BubbleSort,Fraction,50000,8211.2833
+BubbleSort,Integer,60000,8664.9604
+BubbleSort,Fraction,60000,11846.8059
+BubbleSort,Integer,70000,12013.1230

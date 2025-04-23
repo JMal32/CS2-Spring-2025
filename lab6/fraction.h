@@ -130,6 +130,8 @@ ostream &operator<<(ostream &os, const Fraction &f) {
   os << f.numerator << " / " << f.denominator;
   return os;
 }
+
+/*
 int main() {
   Fraction f1(55, 16); // Made 3 fractions to test the overloads
   Fraction f2(6, 12);
@@ -200,4 +202,4 @@ int main() {
   cout << endl;
 
   return 0;
-}
+} */
