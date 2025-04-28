@@ -23,20 +23,16 @@ vector<int> generateUniqueRandomNumbers(int count, int max) {
   return numbers;
 }
 
-void testSearches(int size, ofstream &csvFile) {
-  // Generate master list of unique numbers
-  vector<int> masterList = generateUniqueRandomNumbers(size + 1000, size * 2);
-
-  // Get test lists
+void testSearches(const vector<int>& masterList, int size, ofstream &csvFile) {
+  // Get test lists from master list
   vector<int> testList(masterList.begin(), masterList.begin() + size);
-  vector<int> searchPresent = generateUniqueRandomNumbers(1000, size);
-  vector<int> searchNotPresent(masterList.begin() + size,
-                               masterList.begin() + size + 1000);
+  vector<int> searchPresent(masterList.begin() + size, masterList.begin() + size + 1000);
+  vector<int> searchNotPresent(masterList.begin() + size + 1000, masterList.begin() + size + 2000);
 
   // Test HashTable with 50% load factor
   HashTable<int> ht50;
   ht50.quickLoad(testList, 0.5);
-
+  
   // Time present items
   chrono::high_resolution_clock::time_point start =
       chrono::high_resolution_clock::now();
@@ -61,7 +57,7 @@ void testSearches(int size, ofstream &csvFile) {
   // Test HashTable with 95% load factor
   HashTable<int> ht95;
   ht95.quickLoad(testList, 0.95);
-
+  
   // Time present items
   start = chrono::high_resolution_clock::now();
   for (int num : searchPresent) {
@@ -100,12 +96,13 @@ void testSearches(int size, ofstream &csvFile) {
   csvFile << elapsed.count() / 1000.0 << ",";
 
   // Test binary search
-  sort(testList.begin(), testList.end());
-
+  vector<int> sortedList = testList;  // Create copy to avoid aliasing
+  sort(sortedList.begin(), sortedList.end());
+  
   // Time present items
   start = chrono::high_resolution_clock::now();
   for (int num : searchPresent) {
-    binary_search(testList.begin(), testList.end(), num);
+    binary_search(sortedList.begin(), sortedList.end(), num);
   }
   end = chrono::high_resolution_clock::now();
   elapsed = end - start;
@@ -114,7 +111,7 @@ void testSearches(int size, ofstream &csvFile) {
   // Time non-present items
   start = chrono::high_resolution_clock::now();
   for (int num : searchNotPresent) {
-    binary_search(testList.begin(), testList.end(), num);
+    binary_search(sortedList.begin(), sortedList.end(), num);
   }
   end = chrono::high_resolution_clock::now();
   elapsed = end - start;
@@ -122,15 +119,18 @@ void testSearches(int size, ofstream &csvFile) {
 }
 
 int main() {
+  // Generate master list of 1,001,000 unique numbers
+  vector<int> masterList = generateUniqueRandomNumbers(1001000, 2000000);
+  
   ofstream csvFile("search_timing.csv");
   csvFile << "Size,HT50_Present,HT50_NotPresent,HT95_Present,HT95_NotPresent,"
-             "Seq_Present,Seq_NotPresent,Bin_Present,Bin_NotPresent"
-          << endl;
+            "Seq_Present,Seq_NotPresent,Bin_Present,Bin_NotPresent"
+         << endl;
 
   cout << "Testing search algorithms..." << endl;
 
   for (int size = 100000; size <= 1000000; size += 100000) {
-    testSearches(size, csvFile);
+    testSearches(masterList, size, csvFile);
     cout << "Completed size " << size << endl;
   }
 
