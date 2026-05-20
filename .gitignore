@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Build artifacts
+*.o
+*.obj
+*.exe
+*.out
+*.dSYM/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
